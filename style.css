@@ -1,0 +1,360 @@
+/* ====== CSS für ToDo App ====== */
+/* Systemschrift, klare Abstände, gute Kontraste */
+:root {
+  --bg: #0b1020;
+  --panel: #141a2e;
+  --panel-2: #10162a;
+  --text: #e6e9f2;
+  --muted: #a8b0c3;
+  --accent: #5b8cff;
+  --accent-2: #7fd1b9;
+  --danger: #ff6b6b;
+  --ring: 2px solid color-mix(in oklab, var(--accent) 70%, white 0%);
+  --radius: 14px;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f6f7fb;
+    --panel: #ffffff;
+    --panel-2: #f2f4f8;
+    --text: #11131a;
+    --muted: #5b667a;
+    --accent: #315efb;
+    --accent-2: #0ea5e9;
+    --danger: #e11d48;
+    --shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
+}
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font: 16px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell,
+    Noto Sans, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  color: var(--text);
+  background: radial-gradient(
+      1200px 600px at 20% -10%,
+      #1a2341 0%,
+      transparent 60%
+    ),
+    linear-gradient(180deg, var(--bg), var(--bg));
+}
+
+/* Hilfsklassen */
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.help-text {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin: 0.25rem 0 0;
+}
+
+/* Layout */
+.app-header {
+  max-width: 860px;
+  margin: 32px auto 0;
+  padding: 12px 20px;
+}
+.app-header h1 {
+  margin: 0;
+  font-size: clamp(28px, 4vw, 40px);
+  letter-spacing: 0.5px;
+}
+
+.app-main {
+  max-width: 860px;
+  margin: 12px auto;
+  padding: 0 20px 48px;
+}
+
+/* Composer */
+.composer {
+  background: var(--panel);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px;
+}
+#todo-form {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: start;
+}
+#todo-input {
+  width: 100%;
+  border: 1px solid transparent;
+  background: var(--panel-2);
+  color: var(--text);
+  padding: 14px 16px;
+  border-radius: 12px;
+  outline: none;
+  transition: 0.2s ease;
+  font-size: 1rem;
+}
+#todo-input::placeholder {
+  color: color-mix(in oklab, var(--muted) 85%, var(--text) 15%);
+}
+#todo-input:focus {
+  border-color: color-mix(in oklab, var(--accent) 65%, white 0%);
+  box-shadow: 0 0 0 5px color-mix(in oklab, var(--accent) 30%, transparent 70%);
+}
+
+#add-btn {
+  padding: 14px 18px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-weight: 600;
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--accent) 85%, white 15%),
+    var(--accent)
+  );
+  color: white;
+  transition: transform 0.08s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+  box-shadow: var(--shadow);
+}
+#add-btn:hover {
+  opacity: 0.95;
+}
+#add-btn:active {
+  transform: translateY(1px);
+}
+#add-btn:focus-visible {
+  outline: var(--ring);
+}
+
+/* Liste */
+.list {
+  margin-top: 18px;
+}
+#list-heading {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0 10px;
+  color: var(--muted);
+}
+#todo-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.todo-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 12px;
+  align-items: center;
+  background: var(--panel);
+  border-radius: 16px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  border: 1px solid color-mix(in oklab, var(--panel-2) 80%, #000 20%);
+}
+
+/* Checkbox custom */
+.checkbox {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+.checkbox input {
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 8px;
+  margin: 0;
+  cursor: pointer;
+  border: 2px solid color-mix(in oklab, var(--muted) 40%, var(--text) 60%);
+  background: var(--panel-2);
+  display: grid;
+  place-items: center;
+  transition: 0.2s ease;
+}
+.checkbox .checkmark {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+}
+.checkbox input:checked {
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--accent-2) 85%, white 15%),
+    var(--accent-2)
+  );
+  border-color: transparent;
+}
+.checkbox input:checked + .checkmark::after {
+  content: "✔";
+}
+.checkbox input:focus-visible {
+  outline: var(--ring);
+}
+
+/* Titel & Bearbeitung */
+.title {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  padding: 8px 10px;
+  border-radius: 10px;
+  transition: background 0.2s ease;
+}
+.todo-item.completed .title {
+  color: var(--muted);
+  text-decoration: line-through;
+}
+.title[contenteditable="true"] {
+  background: var(--panel-2);
+  outline: 1px dashed color-mix(in oklab, var(--accent) 60%, transparent 40%);
+}
+.title:focus {
+  outline: var(--ring);
+}
+
+/* Item Actions */
+.item-actions {
+  display: flex;
+  gap: 8px;
+}
+.item-actions .edit,
+.item-actions .delete {
+  border: 1px solid color-mix(in oklab, var(--panel-2) 80%, #000 20%);
+  background: var(--panel-2);
+  color: var(--text);
+  padding: 8px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s ease, opacity 0.2s ease, transform 0.08s ease;
+}
+.item-actions .edit:hover {
+  background: color-mix(in oklab, var(--panel-2) 70%, var(--accent) 30%);
+}
+.item-actions .delete:hover {
+  background: color-mix(in oklab, var(--panel-2) 70%, var(--danger) 30%);
+}
+.item-actions button:active {
+  transform: translateY(1px);
+}
+.item-actions button:focus-visible {
+  outline: var(--ring);
+}
+
+/* Controls */
+.controls {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 10px;
+  align-items: center;
+  background: var(--panel);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  box-shadow: var(--shadow);
+}
+.stats {
+  color: var(--muted);
+}
+.filters {
+  display: flex;
+  gap: 8px;
+}
+.filter {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid color-mix(in oklab, var(--panel-2) 80%, #000 20%);
+  padding: 8px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+.filter:hover {
+  background: var(--panel-2);
+}
+.filter.is-active,
+.filter[aria-pressed="true"] {
+  background: color-mix(in oklab, var(--accent) 25%, transparent 75%);
+  border-color: color-mix(in oklab, var(--accent) 55%, transparent 45%);
+}
+
+#clear-completed {
+  justify-self: end;
+  border-radius: 12px;
+  padding: 10px 12px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  background: color-mix(in oklab, var(--danger) 20%, transparent 80%);
+  color: var(--text);
+  transition: opacity 0.2s ease, transform 0.08s ease;
+}
+#clear-completed:hover {
+  opacity: 0.95;
+}
+#clear-completed:active {
+  transform: translateY(1px);
+}
+#clear-completed:focus-visible {
+  outline: var(--ring);
+}
+
+/* Responsiv */
+@media (max-width: 640px) {
+  #todo-form {
+    grid-template-columns: 1fr;
+  }
+  #add-btn {
+    width: 100%;
+  }
+  .controls {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .item-actions .edit,
+  .item-actions .delete {
+    padding: 8px;
+  }
+}
+
+/* Kleine Animation beim Einfügen/Entfernen (JS fügt/entfernt Klassen) */
+.todo-item.enter {
+  animation: pop 0.15s ease-out both;
+}
+.todo-item.exit {
+  animation: shrink 0.15s ease-in both;
+}
+@keyframes pop {
+  from {
+    transform: scale(0.98);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes shrink {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0.98);
+    opacity: 0;
+  }
+}

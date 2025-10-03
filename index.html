@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ToDo Liste</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="app-header" role="banner">
+      <h1>AYSULIX. ToDo-Liste</h1>
+    </header>
+
+    <main class="app-main" id="app" role="main">
+      <!-- Eingabe -->
+      <section class="composer" aria-label="Neue Aufgabe hinzufügen">
+        <form id="todo-form" autocomplete="off">
+          <label class="sr-only" for="todo-input">Neue Aufgabe</label>
+          <input
+            id="todo-input"
+            name="title"
+            type="text"
+            placeholder="Was musst du erledigen?"
+            required
+            maxlength="200"
+            aria-describedby="input-help"
+          />
+          <button type="submit" id="add-btn">Hinzufügen</button>
+          <p id="input-help" class="help-text">
+            Drücke Enter oder klicke „Hinzufügen“.
+          </p>
+        </form>
+      </section>
+
+      <!-- Liste -->
+      <section class="list" aria-labelledby="list-heading">
+        <h2 id="list-heading">Deine Aufgaben</h2>
+        <ul id="todo-list" role="list" aria-live="polite" aria-relevant="all">
+          <!-- Einträge werden per JavaScript eingefügt -->
+        </ul>
+      </section>
+
+      <!-- Aktionen / Filter -->
+      <section class="controls" aria-label="Aktionen und Filter">
+        <div class="stats" id="todo-stats" aria-live="polite">
+          <span id="items-left">0</span> offen
+        </div>
+        <div class="filters" role="group" aria-label="Filter">
+          <button
+            class="filter is-active"
+            data-filter="all"
+            aria-pressed="true"
+          >
+            Alle
+          </button>
+          <button class="filter" data-filter="active" aria-pressed="false">
+            Offen
+          </button>
+          <button class="filter" data-filter="completed" aria-pressed="false">
+            Erledigt
+          </button>
+        </div>
+        <button
+          id="clear-completed"
+          class="danger"
+          aria-label="Erledigte Aufgaben löschen"
+        >
+          Erledigte löschen
+        </button>
+      </section>
+    </main>
+
+    <!-- Vorlagen für Listeneinträge (werden per JS geklont) -->
+    <template id="todo-item-template">
+      <li class="todo-item" data-id="">
+        <label class="checkbox">
+          <input
+            type="checkbox"
+            class="toggle"
+            aria-label="Aufgabe als erledigt markieren"
+          />
+          <span class="checkmark" aria-hidden="true"></span>
+        </label>
+        <span class="title" contenteditable="false"></span>
+        <div class="item-actions">
+          <button class="edit" type="button" aria-label="Aufgabe bearbeiten">
+            ✏️
+          </button>
+          <button class="delete" type="button" aria-label="Aufgabe löschen">
+            🗑️
+          </button>
+        </div>
+      </li>
+    </template>
+
+    <script defer src="script.js"></script>
+  </body>
+</html>
