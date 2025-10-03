@@ -56,6 +56,3 @@ Keine weiteren Abhängigkeiten notwendig ✅
 - Deployment auf GitHub Pages oder Vercel
 
 ---
-
-## 📜 Lizenz
-Dieses Projekt steht unter der **MIT Lizenz** – siehe [LICENSE](LICENSE) Datei.
